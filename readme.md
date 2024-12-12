@@ -11,6 +11,45 @@ para ter acesso aos endpoints no seu navegador acesse:
 rodar testes unitarios:
 ``` pytest ```
 
+# Interagindo
+
+Para o **Portador** é possivel criar, buscar e desativar.
+- Para criar basta passar um CPF valido e um nome. Exemplo:
+
+```aiignore
+{
+  "cpf": "392.572.850-30", # Pode ser enviado sem formatação tambem
+  "name": "Felipe Regino"
+}
+```
+
+- Para buscar basta passar o CPF do portador.
+
+- Para desativar tambem basta passar o CPF do portador.
+
+Para a **conta digital Dock** é possivel buscar todas de um portador, por id, criar, fechar bloquear e desbloquear
+- Para buscar todas basta passar o CPF do portador.
+- Para buscar por id basta passar o CPF do portador e o id da conta.
+- Para criar basta passar o CPF do portador.
+- Para fechar, bloquear e desbloquear basta passar o CPF do portador e o id da conta.
+
+Para as **Transações** é posivel consultar o extrato, saque e depósito
+- Para consultar o extrato basta passar o id da conta e caso queira filtrar por período, filtros de data. Exemplo:
+```aiignore
+dock_account_id="[id da conta]"
+start_date=2024-01-01 # opcional
+end_date=2024-01-30 # opcional
+```
+
+- Para o saque e o depósito é necessario passar o id da conta, o tipo de transação e o valor. Exemplo:
+```aiignore
+{
+  "dock_account": "[id da conta]",
+  "type": "DEPOSIT", # [DEPOSIT=depósito, WITHDRAWAL=saque]
+  "amount": 100,
+}
+```
+
 # Cenário
 
 A Dock está crescendo e expandindo seus negócios, gerando novas oportunidades de revolucionar o mercado financeiro e criar produtos diferenciados.

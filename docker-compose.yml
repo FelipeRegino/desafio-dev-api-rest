@@ -13,7 +13,7 @@ services:
       - type: bind
         source: ./
         target: /app
-    entrypoint: bash -c "pem migrate && uvicorn app.http_server:app --host 0.0.0.0 --port 8000 --reload --log-level debug"
+    entrypoint: bash -c "pem migrate && uvicorn app.http_server:app --host 0.0.0.0 --port 8000 --log-level debug"
     depends_on:
       db:
         condition: service_healthy
