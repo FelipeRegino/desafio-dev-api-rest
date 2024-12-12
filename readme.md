@@ -1,3 +1,16 @@
+# Como rodar
+
+Para rodar o projeto é necessario ter o Docker e o docker-compose instalados na maquina
+
+iniciar o projeto:
+``` docker compose up ```
+
+para ter acesso aos endpoints no seu navegador acesse:
+``` http://localhost:8000/docs ```
+
+rodar testes unitarios:
+``` pytest ```
+
 # Cenário
 
 A Dock está crescendo e expandindo seus negócios, gerando novas oportunidades de revolucionar o mercado financeiro e criar produtos diferenciados.
