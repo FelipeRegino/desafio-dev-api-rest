@@ -55,17 +55,13 @@ def test_create_holder_invalid_cpf(holder_service):
     assert exc_info.value.status_code == 422
     assert exc_info.value.detail == "Invalid CPF"
 
-def test_update_holder_success(holder_service, holder_repository):
+def test_deactivate_holder(holder_service, holder_repository):
     # Insert initial data into the database
     holder_repository.insert(HolderInterface(cpf="41762501007", name="Test User"))
 
-    # Prepare the holder input for update
-    updated_holder = HolderInterface(cpf="41762501007", name="Updated User", status=False)
-
     # Call the service method
-    result = holder_service.update(holder=updated_holder)
+    holder_service.deactivate(cpf="41762501007")
 
+    holder = holder_service.get_holder(cpf="41762501007")
     # Assert the result
-    assert result.cpf == "41762501007"
-    assert result.name == "Updated User"
-    assert result.status == False
+    assert holder.status == False

@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 
 from app.interfaces.holder import HolderInterface
+from app.repositories.dock_account_repository import DockAccountRepository
 from app.repositories.holder_repository import HolderRepository
 from app.utils.validator import validate_cpf
 
@@ -8,6 +9,7 @@ from app.utils.validator import validate_cpf
 class HolderService:
     def __init__(self):
         self._repository = HolderRepository()
+        self._dock_account_repository = DockAccountRepository()
 
     def get_holder(self, cpf: str):
         holder = self._repository.get_by_id(cpf=cpf)
@@ -21,6 +23,6 @@ class HolderService:
         new_holder = self._repository.insert(holder=holder)
         return new_holder
 
-    def update(self, holder: HolderInterface):
-        updated_holder = self._repository.update(holder=holder)
-        return updated_holder
+    def deactivate(self, cpf: str):
+        self._repository.deactivate(cpf=cpf)
+        self._dock_account_repository.close_holder_accounts(cpf=cpf)

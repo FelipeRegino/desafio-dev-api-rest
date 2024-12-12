@@ -23,7 +23,7 @@ async def create_holder(holder: HolderInterface):
     created_holder = _service.create(holder=holder)
     return JSONResponse(content=jsonable_encoder(created_holder), status_code=201)
 
-@router.put("")
-async def update_holder(holder: HolderInterface):
-    updated_holder = _service.update(holder=holder)
-    return JSONResponse(content=jsonable_encoder(updated_holder), status_code=200)
+@router.put("/deactivate")
+async def deactivate_holder(cpf: str):
+    _service.deactivate(cpf=cpf)
+    return JSONResponse(content={"message": "Holder deactivated"}, status_code=200)

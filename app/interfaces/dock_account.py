@@ -15,7 +15,7 @@ class DockAccountInterface(BaseModel):
     holder: str
     number: str
     agency: str
-    balance: Decimal = 0.0
+    balance: Decimal = Decimal(0.0)
     created_at: datetime = datetime.now()
     updated_at: Optional[datetime] = None
     status: AccountStatus = AccountStatus.active

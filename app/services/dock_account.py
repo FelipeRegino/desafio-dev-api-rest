@@ -25,7 +25,7 @@ class DockAccountService:
 
     def create(self, cpf: str):
         cpf = re.sub("[^0-9]", "", cpf)
-        holder = self._holder_repository.get_by_id(cpf=cpf, **{"status": True})
+        holder = self._holder_repository.get_by_id(cpf=cpf, status=True)
         dock_account = DockAccountInterface(
             holder=holder.cpf,
             number=generate_random_account_number(),

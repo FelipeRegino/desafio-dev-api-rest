@@ -60,26 +60,14 @@ def test_create_holder_invalid():
     # Validate the response
     assert response.status_code == 422
 
-def test_update_holder_success(setup_database, mock_holder):
+def test_deactivate_holder_success(setup_database, mock_holder):
     # Create a holder in the database
     Holder.create(**mock_holder.model_dump())
 
-    # Update the holder's name
-    updated_data = mock_holder.model_dump()
-    updated_data["name"] = "Updated Holder"
-
     # Call the PUT /holder endpoint
-    response = client.put("/holder", json=updated_data)
+    response = client.put("/holder/deactivate", json={"cpf": mock_holder.cpf})
 
     # Validate the response
     assert response.status_code == 200
     data = response.json()
-    assert data["name"] == "Updated Holder"
-
-def test_update_holder_not_found(mock_holder):
-    # Call the PUT /holder endpoint for a non-existing holder
-    response = client.put("/holder", json=mock_holder.model_dump())
-
-    # Validate the response
-    assert response.status_code == 404
-    assert response.json()["detail"] == "Holder not found"
+    assert data["message"] == "Holder deactivated"

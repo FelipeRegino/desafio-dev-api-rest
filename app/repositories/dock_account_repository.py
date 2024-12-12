@@ -4,7 +4,7 @@ from fastapi import HTTPException
 
 from app.database.models.dock_account import DockAccount
 from app.interfaces.dock_account import DockAccountInterface
-from app.interfaces.enum import TransactionType
+from app.interfaces.enum import TransactionType, AccountStatus
 
 
 class DockAccountRepository:
@@ -30,6 +30,9 @@ class DockAccountRepository:
             raise HTTPException(status_code=404, detail="DockAccount not found")
         dock_account_to_update.update(**dock_account.model_dump()).where(self._model.id == dock_account.id).execute()
         return dock_account
+
+    def close_holder_accounts(self, cpf: str):
+        self._model.update(status=AccountStatus.closed.value).where(self._model.holder == cpf).execute()
 
     @staticmethod
     def make_transaction(dock_account: DockAccount, amount: Decimal, transaction_type: TransactionType):

@@ -23,6 +23,6 @@ async def get_transaction_history(dock_account_id: str, start_date: datetime = N
     return JSONResponse(content=jsonable_encoder(transaction_history), status_code=200)
 
 @router.post("")
-async def create_transaction_history(transaction_history: TransactionHistoryInterface):
+async def create_transaction(transaction_history: TransactionHistoryInterface):
     created_transaction_history = _service.create(transaction_history=transaction_history)
     return JSONResponse(content=jsonable_encoder(created_transaction_history), status_code=201)

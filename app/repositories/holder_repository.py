@@ -31,9 +31,8 @@ class HolderRepository:
         holder = self._model.select().where(self._model.cpf == cpf).first()
         return [DockAccountInterface.build(dock_account=x) for x in holder.accounts]
 
-    def update(self, holder: HolderInterface) -> HolderInterface:
-        holder_to_update = self._model.select().where(self._model.cpf == holder.cpf).first()
+    def deactivate(self, cpf: str):
+        holder_to_update = self._model.select().where(self._model.cpf == cpf).first()
         if not holder_to_update:
             raise HTTPException(status_code=404, detail="Holder not found")
-        holder_to_update.update(**holder.model_dump()).where(self._model.cpf == holder.cpf).execute()
-        return holder
+        holder_to_update.update(status=False).where(self._model.cpf == cpf).execute()
