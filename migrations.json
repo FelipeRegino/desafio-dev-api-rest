@@ -1,0 +1,10 @@
+{
+  "prerun": "# some code here",
+  "directory": "migrations",
+  "history": "migratehistory",
+  "models": [
+    "app.database.models.holder.Holder",
+    "app.database.models.dock_account.DockAccount",
+    "app.database.models.transaction_history.TransactionHistory"
+  ]
+}

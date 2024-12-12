@@ -1,0 +1,44 @@
+services:
+  api:
+    build:
+      context: .
+    container_name: app
+    ports:
+      - "8000:8000"
+    networks:
+      - app
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    entrypoint: bash -c "pem migrate && uvicorn app.http_server:app --host 0.0.0.0 --port 8000 --reload --log-level debug"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:15.10-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGUSER: postgres
+      POSTGRES_DB: api
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-U", "postgres" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+volumes:
+  pgdata:
+
+networks:
+  app:
+    driver: bridge
